@@ -1,9 +1,18 @@
 EXEC=biblio
 
-OBJS= main.o cd.o command.o book.o vhs.o tools.o media.o
+SRC = main.cc cd.cc book.cc vhs.cc tools.cc media.cc
+OBJS= $(SRC:.cc=.o)
+
+CXXFLAGS = -std=c++11
+CXX = g++
 
 all: $(EXEC)
+
 $(EXEC): $(OBJS)
-	$(CXX) -o $@ $^ 
+	$(CXX) $(CXXFLAGS) -o $@ $^ 
+
+%.o: %.c
+	$(CXX) $(CXXFLAGS) -o $@ -c $< 
+
 clean:
 	$(RM) $(EXEC) *.o

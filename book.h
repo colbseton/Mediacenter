@@ -2,14 +2,14 @@
 #define BOOK_H
 
 #include <string>
-#include "media.h"
+#include "media.h" /* <fstream>, <iostream>, <vector>… */
 
 class Book : public Media {
     public:
         Book();
         virtual void createMedia();
-        virtual void affiche() const;
-
+        virtual void print() const;
+        virtual void saveMedia(std::string const fileName) const;
     private:
         std::string title;
         std::string author;

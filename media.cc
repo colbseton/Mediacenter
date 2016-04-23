@@ -3,19 +3,22 @@
 
 #include "book.h"
 
-Media::Media() {
 
+void Mediacenter::saveMedias() {
+    std::string fileName = command.arg;
+
+    for(auto it : data)
+        it->saveMedia(fileName);
+
+    data.clear();
 }
-
-Mediacenter::Mediacenter() {
-
-}
-
 
 void Mediacenter::readFileType() {
+
     if(command.commandName.compare("add") == 0) {
+
         if(command.arg.compare("book") == 0) {
-            std::cout << "coucou\n";
+
             Book* newbook = new Book;
             newbook->createMedia();
 
@@ -33,14 +36,14 @@ void Mediacenter::readFileType() {
 void Mediacenter::readCommand(std::string input) {
     std::vector<std::string> input_split = split(input, ' ');
 
-    command.commandName = input_split[0];
+    if(input_split.size() > 0) {
+        command.commandName = input_split[0];
 
     if(input_split.size() > 1) {
         command.arg = input_split[1];
     }
 
     if(command.commandName.compare("add") == 0) {
-        std::cout << "if";
         readFileType();
     }
 
@@ -49,7 +52,7 @@ void Mediacenter::readCommand(std::string input) {
     }
 
     else if(command.commandName.compare("save") == 0) {
-
+        saveMedias();
     }
 
     else if(command.commandName.compare("search") == 0) {
@@ -80,4 +83,5 @@ void Mediacenter::readCommand(std::string input) {
         std::cout << "Session terminated" << std::endl;
         std::exit(0);
     }
+}
 }

@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream> 
 #include <cstdlib>
-
+#include <fstream>
 
 enum user {
     USER, ROOT
@@ -12,7 +12,7 @@ enum user {
 
 class Command {
     public:
-        Command();
+        Command() {};
         std::string commandName;
         std::string arg;
 };
@@ -20,18 +20,20 @@ class Command {
 
 class Media {
     public:
-        Media();
-        virtual void affiche() const { };
+        Media(){};
+        virtual void print() const { };
         virtual void createMedia() { };
+        virtual void saveMedia(std::string const fileName) const {};
 };
 
 
 
 class Mediacenter {
     public:
-        Mediacenter();
+        Mediacenter() {};
         void readFileType();
         void readCommand(std::string);
+        void saveMedias();
 
         std::vector<Media*> data;
         Command command;
