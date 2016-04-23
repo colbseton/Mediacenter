@@ -14,7 +14,6 @@ void Mediacenter::saveMedias() {
 }
 
 void Mediacenter::readFileType() {
-
     if(command.commandName.compare("add") == 0) {
 
         if(command.arg.compare("book") == 0) {
@@ -39,49 +38,49 @@ void Mediacenter::readCommand(std::string input) {
     if(input_split.size() > 0) {
         command.commandName = input_split[0];
 
-    if(input_split.size() > 1) {
-        command.arg = input_split[1];
+        if(input_split.size() > 1) {
+            command.arg = input_split[1];
+        }
+
+        if(command.commandName.compare("add") == 0) {
+            readFileType();
+        }
+
+        else if(command.commandName.compare("load") == 0) {
+
+        }
+
+        else if(command.commandName.compare("save") == 0) {
+            saveMedias();
+        }
+
+        else if(command.commandName.compare("search") == 0) {
+
+        }
+
+        else if(command.commandName.compare("clear") == 0) {
+
+        }
+
+        else if(command.commandName.compare("list") == 0) {
+
+        }
+
+        else if(command.commandName.compare("show") == 0) {
+
+        }
+
+        else if(command.commandName.compare("delete") == 0) {
+
+        }
+
+        else if(command.commandName.compare("reset") == 0) {
+
+        }
+
+        else if (command.commandName.compare("bye") == 0) {
+            std::cout << "Session terminated" << std::endl;
+            std::exit(0);
+        }
     }
-
-    if(command.commandName.compare("add") == 0) {
-        readFileType();
-    }
-
-    else if(command.commandName.compare("load") == 0) {
-
-    }
-
-    else if(command.commandName.compare("save") == 0) {
-        saveMedias();
-    }
-
-    else if(command.commandName.compare("search") == 0) {
-
-    }
-
-    else if(command.commandName.compare("clear") == 0) {
-
-    }
-
-    else if(command.commandName.compare("list") == 0) {
-
-    }
-
-    else if(command.commandName.compare("show") == 0) {
-
-    }
-
-    else if(command.commandName.compare("delete") == 0) {
-
-    }
-
-    else if(command.commandName.compare("reset") == 0) {
-
-    }
-
-    else if (command.commandName.compare("bye") == 0) {
-        std::cout << "Session terminated" << std::endl;
-        std::exit(0);
-    }
-}
 }
