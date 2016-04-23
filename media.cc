@@ -6,7 +6,7 @@
 
 void Mediacenter::saveMedias() {
     std::string fileName = command.arg;
-
+    
     for(auto it : data)
         it->saveMedia(fileName);
 
@@ -17,7 +17,6 @@ void Mediacenter::readFileType() {
     if(command.commandName.compare("add") == 0) {
 
         if(command.arg.compare("book") == 0) {
-
             Book* newbook = new Book;
             newbook->createMedia();
 
