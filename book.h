@@ -9,6 +9,7 @@ class Book : public Media {
         Book();
         virtual void createMedia();
         virtual void print() const;
+        virtual void loadMedia(std::string const fileName, std::string readFromFile);
         virtual void saveMedia(std::string const fileName) const;
     private:
         std::string title;

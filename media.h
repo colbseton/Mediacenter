@@ -23,6 +23,7 @@ class Media {
         Media(){};
         virtual void print() const { };
         virtual void createMedia() { };
+        virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
         virtual void saveMedia(std::string const fileName) const {};
 };
 
@@ -33,6 +34,7 @@ class Mediacenter {
         Mediacenter() {};
         void readFileType();
         void readCommand(std::string);
+        void loadMedias();
         void saveMedias();
 
         std::vector<Media*> data;

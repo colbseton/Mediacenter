@@ -31,7 +31,28 @@ void Book::createMedia() {
 
 
 void Book::print() const {
-    std::cout << "titre : " << title << std::endl;
+    std::string extension = ".book";
+    std::string titleSimple = title;
+    titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
+
+    std::cout << "titre : " << titleSimple << std::endl;
+    std::cout << "autheur : " << author << std::endl;
+    std::cout << "petit résumé : " << recap << std::endl;
+    std::cout << "édition : " << edition << std::endl;
+    std::cout << "année : " << year << std::endl;
+    std::cout << "pages : " << nbPages << std::endl;
+}
+
+
+void Book::loadMedia(std::string const fileName, std::string readFromFile) {
+    std::vector<std::string> splitted = split(readFromFile, '|');
+
+    title = splitted[0];
+    author = splitted[1];
+    recap = splitted[2];
+    edition = splitted[3];
+    year = std::atoi(splitted[4].c_str());
+    nbPages = std::atoi(splitted[5].c_str());
 }
 
 
@@ -47,13 +68,16 @@ void Book::saveMedia(std::string const fileName) const {
                    << year     << '|'   
                    << nbPages  << std::endl;
 
-        std::cout << "medias \"" << title << ".book \" " << "saved into :" 
+        std::cout << "medias \"" << title << ".book \" " << "saved into : " 
                   << fileName << std::endl;
+
+        /* penser à fermer le fichier */
     }
 
     else 
         std::cout << "error could not open the file : " << fileName 
                   << std::endl;
+
 }
 
 
