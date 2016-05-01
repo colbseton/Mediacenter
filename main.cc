@@ -20,5 +20,6 @@ int main(int argc, char *argv[]) {
         mediacenter.readCommand(input);
         input = "";
     }
+    mediacenter.data[0]->print();
     return 0;
 }

@@ -1,7 +1,30 @@
 #include "media.h"
 #include "tools.h"
 
-#include "book.h"
+#include "book.h" // <string.h>
+
+void Mediacenter::searchMedias() {
+    std::string strToFind = command.arg;
+
+    std::vector<Media*> copy;
+
+    std::copy_if(searchResults.begin(), searchResults.end(),
+                 std::back_inserter(copy), 
+                 [strToFind](Media* obj){ return (obj->findInfo(strToFind)); } );
+
+    searchResults = copy;
+}
+
+
+void Mediacenter::printMedias() {
+    if(isSearching == true)
+        for(auto it : searchResults)
+            it->print();
+    
+    else
+        for(auto it : data)
+            it->print();
+}
 
 
 void Mediacenter::loadMedias() {
@@ -11,10 +34,8 @@ void Mediacenter::loadMedias() {
 
     if(streamFile.is_open()) {
         while(getline(streamFile, buffer)) {
-            auto visBook = buffer.find(".book");
-            /* … */ 
 
-            if(visBook >= 0 && visBook <= buffer.length()) {
+            if(buffer.find(".book") != std::string::npos) { // is there ".book" in buffer ?
                 Book *newBook = new Book;
                 newBook->loadMedia(fileName, buffer);
                 data.push_back(newBook);
@@ -67,8 +88,10 @@ void Mediacenter::readCommand(std::string input) {
         if(inputSplit.size() > 1) 
             command.arg = inputSplit[1];
 
+
         if(command.commandName.compare("add") == 0)
             readFileType();
+
 
         else if(command.commandName.compare("load") == 0)
             loadMedias();
@@ -76,16 +99,19 @@ void Mediacenter::readCommand(std::string input) {
         else if(command.commandName.compare("save") == 0)
             saveMedias();
 
-        else if(command.commandName.compare("search") == 0) {
 
+        else if(command.commandName.compare("search") == 0) {
+            isSearching = true;
+            searchResults = data;
+            searchMedias();
         }
 
         else if(command.commandName.compare("clear") == 0) {
-
+            isSearching = false;
         }
 
         else if(command.commandName.compare("list") == 0) {
-
+            printMedias();
         }
 
         else if(command.commandName.compare("show") == 0) {

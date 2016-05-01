@@ -7,6 +7,18 @@ Book::Book() {
 
 }
 
+bool Book::findInfo(std::string str) {
+    bool var = false;
+    auto strc = str.c_str();
+
+    var = title.find(strc) != std::string::npos;
+    var = var || author.find(strc) != std::string::npos;
+    var = var || recap.find(strc) != std::string::npos;
+    var = var || edition.find(strc) != std::string::npos;
+
+    return var;
+}
+
 void Book::createMedia() {
     std::cout << "Ajout d'un livre..." << std::endl;
 
@@ -33,18 +45,23 @@ void Book::createMedia() {
 void Book::print() const {
     std::string extension = ".book";
     std::string titleSimple = title;
+
+    // delete the extension ".book" in the title
     titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
 
     std::cout << "titre : " << titleSimple << std::endl;
-    std::cout << "autheur : " << author << std::endl;
+    std::cout << "auteur : " << author << std::endl;
     std::cout << "petit résumé : " << recap << std::endl;
     std::cout << "édition : " << edition << std::endl;
     std::cout << "année : " << year << std::endl;
-    std::cout << "pages : " << nbPages << std::endl;
+    std::cout << "pages : " << nbPages << std::endl << std::endl;
 }
 
 
 void Book::loadMedia(std::string const fileName, std::string readFromFile) {
+    /* splits a string read from the database and fills 
+       the object fields */
+
     std::vector<std::string> splitted = split(readFromFile, '|');
 
     title = splitted[0];

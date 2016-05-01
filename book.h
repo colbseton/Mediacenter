@@ -11,7 +11,9 @@ class Book : public Media {
         virtual void print() const;
         virtual void loadMedia(std::string const fileName, std::string readFromFile);
         virtual void saveMedia(std::string const fileName) const;
-        
+
+        virtual bool findInfo(std::string);
+
     private:
         std::string title;
         std::string author;

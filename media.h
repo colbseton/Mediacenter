@@ -1,6 +1,7 @@
 #ifndef MEDIA_H
 #define MEDIA_H
 
+#include <algorithm> // copy_if
 #include <vector>
 #include <iostream> 
 #include <cstdlib>
@@ -21,6 +22,7 @@ class Command {
 class Media {
     public:
         Media(){};
+        virtual bool findInfo(std::string) { };
         virtual void print() const { };
         virtual void createMedia() { };
         virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
@@ -36,9 +38,14 @@ class Mediacenter {
         void readCommand(std::string);
         void loadMedias();
         void saveMedias();
+        void searchMedias();
+        void printMedias();
 
         std::vector<Media*> data;
         Command command;
+
+        bool isSearching;
+        std::vector<Media*> searchResults;
 };
 
 
