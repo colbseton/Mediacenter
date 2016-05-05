@@ -3,10 +3,36 @@
 
 #include "book.h" // <string.h>
 
+/*
+auto it = std::find_if(data.begin(), data.end(), [&](const Data& d) { return d.id == idToFind; });
+if (it != date.end()) it->print(); else std::cout << "ID non trouve" << std::endl;                */
+
+Mediacenter::Mediacenter() {
+    isSearching = false;
+}
+
+void Mediacenter::showMediaID() {
+    int idToFind = std::atoi(command.arg.c_str());
+    bool findId = false;
+
+    for(auto it : data) {
+        if( (it->id) == idToFind) {
+            it->print();
+            findId = true;
+        }
+    }
+
+    if(findId == false)
+        std::cout << "ressource non trouvée" << std::endl;
+}
+
+
 void Mediacenter::searchMedias() {
     std::string strToFind = command.arg;
 
     std::vector<Media*> copy;
+
+    /* filtering data vector with the search results */
 
     std::copy_if(searchResults.begin(), searchResults.end(),
                  std::back_inserter(copy), 
@@ -17,11 +43,13 @@ void Mediacenter::searchMedias() {
 
 
 void Mediacenter::printMedias() {
-    if(isSearching == true)
+    if(isSearching == true) {
+        std::cout << "Résultats de la recherche incrémentale :\n";
         for(auto it : searchResults)
             it->print();
-    
-    else
+    }
+
+    else 
         for(auto it : data)
             it->print();
 }
@@ -44,7 +72,6 @@ void Mediacenter::loadMedias() {
         }
         std::cout << "medias loaded from file : " << fileName << std::endl;
     }
-
     else 
         std::cout << "error could not open the file : " << fileName 
                   << std::endl;
@@ -110,12 +137,12 @@ void Mediacenter::readCommand(std::string input) {
             isSearching = false;
         }
 
-        else if(command.commandName.compare("list") == 0) {
+        else if(command.commandName.compare("list") == 0) 
             printMedias();
-        }
+
 
         else if(command.commandName.compare("show") == 0) {
-
+            showMediaID();
         }
 
         else if(command.commandName.compare("delete") == 0) {

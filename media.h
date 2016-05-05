@@ -21,25 +21,28 @@ class Command {
 
 class Media {
     public:
-        Media(){};
+        Media() { };
         virtual bool findInfo(std::string) { };
         virtual void print() const { };
         virtual void createMedia() { };
         virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
         virtual void saveMedia(std::string const fileName) const {};
+
+        int id;
 };
 
 
 
 class Mediacenter {
     public:
-        Mediacenter() {};
+        Mediacenter();
         void readFileType();
         void readCommand(std::string);
         void loadMedias();
         void saveMedias();
         void searchMedias();
         void printMedias();
+        void showMediaID();
 
         std::vector<Media*> data;
         Command command;

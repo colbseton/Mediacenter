@@ -1,13 +1,17 @@
 #include <iostream>
 
 #include "book.h"
-#include "tools.h" 
+#include "tools.h" // <ctime>
 
 Book::Book() {
 
 }
 
+
 bool Book::findInfo(std::string str) {
+    /* compare str to object attributes, searching for
+       what the user asks */
+
     bool var = false;
     auto strc = str.c_str();
 
@@ -16,8 +20,10 @@ bool Book::findInfo(std::string str) {
     var = var || recap.find(strc) != std::string::npos;
     var = var || edition.find(strc) != std::string::npos;
 
+    var = var || year == std::atoi(strc) || nbPages == std::atoi(strc);
     return var;
 }
+
 
 void Book::createMedia() {
     std::cout << "Ajout d'un livre..." << std::endl;
@@ -39,6 +45,8 @@ void Book::createMedia() {
 
     std::cout << "Nombre de pages : ";
     std::cin >> nbPages;
+
+    id = std::rand();
 }
 
 
@@ -47,14 +55,16 @@ void Book::print() const {
     std::string titleSimple = title;
 
     // delete the extension ".book" in the title
-    titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
+    if(title.find(".book") != std::string::npos)
+        titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
 
-    std::cout << "titre : " << titleSimple << std::endl;
-    std::cout << "auteur : " << author << std::endl;
+    std::cout << "titre : " << titleSimple  << std::endl;
+    std::cout << "auteur : " << author      << std::endl;
     std::cout << "petit résumé : " << recap << std::endl;
-    std::cout << "édition : " << edition << std::endl;
-    std::cout << "année : " << year << std::endl;
-    std::cout << "pages : " << nbPages << std::endl << std::endl;
+    std::cout << "édition : " << edition    << std::endl;
+    std::cout << "année : " << year         << std::endl;
+    std::cout << "pages : " << nbPages      << std::endl ;
+    std::cout << "ID :" << id               << std::endl << std::endl;
 }
 
 
@@ -70,6 +80,7 @@ void Book::loadMedia(std::string const fileName, std::string readFromFile) {
     edition = splitted[3];
     year = std::atoi(splitted[4].c_str());
     nbPages = std::atoi(splitted[5].c_str());
+    id = std::atoi(splitted[6].c_str());
 }
 
 
@@ -83,7 +94,8 @@ void Book::saveMedia(std::string const fileName) const {
                    << recap    << '|'   
                    << edition  << '|'    
                    << year     << '|'   
-                   << nbPages  << std::endl;
+                   << nbPages  << '|'
+                   << id       << std::endl;
 
         std::cout << "medias \"" << title << ".book \" " << "saved into : " 
                   << fileName << std::endl;

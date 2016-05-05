@@ -19,6 +19,7 @@ class Book : public Media {
         std::string author;
         std::string recap;
         std::string edition;
+
         int year;
         int nbPages;
 };

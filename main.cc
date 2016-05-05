@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
 
 #include "book.h"
 #include "cd.h"
@@ -11,8 +12,9 @@
 using namespace std;
                          
 int main(int argc, char *argv[]) {
+    srand(time(NULL));
+    
     string input("");
-    //Command command;
     Mediacenter mediacenter;
 
     while(1) {
