@@ -13,7 +13,7 @@ using namespace std;
                          
 int main(int argc, char *argv[]) {
     srand(time(NULL));
-    
+
     string input("");
     Mediacenter mediacenter;
 
@@ -22,6 +22,6 @@ int main(int argc, char *argv[]) {
         mediacenter.readCommand(input);
         input = "";
     }
-    mediacenter.data[0]->print();
+
     return 0;
 }

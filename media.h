@@ -26,7 +26,7 @@ class Media {
         virtual void print() const { };
         virtual void createMedia() { };
         virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
-        virtual void saveMedia(std::string const fileName) const {};
+        virtual void saveMedia(std::string const fileName, int FLAG) const {};
 
         int id;
 };
@@ -39,16 +39,20 @@ class Mediacenter {
         void readFileType();
         void readCommand(std::string);
         void loadMedias();
-        void saveMedias();
+        void saveMedias(int FLAG);
         void searchMedias();
         void printMedias();
         void showMediaID();
+        void deleteMediaID();
+        void resetMedias();
 
         std::vector<Media*> data;
         Command command;
 
         bool isSearching;
         std::vector<Media*> searchResults;
+
+        std::string mediaFile;
 };
 
 

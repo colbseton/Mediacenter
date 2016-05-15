@@ -10,7 +10,8 @@ Book::Book() {
 
 bool Book::findInfo(std::string str) {
     /* compare str to object attributes, searching for
-       what the user asks */
+       what the user asks 
+    */
 
     bool var = false;
     auto strc = str.c_str();
@@ -81,26 +82,34 @@ void Book::loadMedia(std::string const fileName, std::string readFromFile) {
     year = std::atoi(splitted[4].c_str());
     nbPages = std::atoi(splitted[5].c_str());
     id = std::atoi(splitted[6].c_str());
+
 }
 
 
-void Book::saveMedia(std::string const fileName) const {
-    /* writing at the end of file */
-    std::ofstream streamFile(fileName.c_str(), std::ios::app);
+void Book::saveMedia(std::string const fileName, int FLAG) const {
+    /* writing at the end of file, ios::app specifies 
+       to write at the end of file 
+       ios::trunc rewrites everything
+    */
+    std::ofstream streamFile(fileName.c_str(), (FLAG == 0) ? std::ios::app : std::ios::trunc);
 
     if(streamFile.is_open()) {
-        streamFile << title    << ".book|" 
-                   << author   << '|' 
+        if(title.find(".book") != std::string::npos)
+            streamFile << title << '|';
+
+        else streamFile << title << ".book" << '|';
+
+
+        streamFile << author   << '|' 
                    << recap    << '|'   
                    << edition  << '|'    
                    << year     << '|'   
                    << nbPages  << '|'
                    << id       << std::endl;
 
-        std::cout << "medias \"" << title << ".book \" " << "saved into : " 
-                  << fileName << std::endl;
-
-        /* penser à fermer le fichier */
+        std::cout << "media book\" " << title <<  "\" " 
+                  << "saved into : " 
+                  << fileName         << std::endl;
     }
 
     else 

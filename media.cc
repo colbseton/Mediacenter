@@ -2,28 +2,52 @@
 #include "tools.h"
 
 #include "book.h" // <string.h>
-
-/*
-auto it = std::find_if(data.begin(), data.end(), [&](const Data& d) { return d.id == idToFind; });
-if (it != date.end()) it->print(); else std::cout << "ID non trouve" << std::endl;                */
+#include "cd.h"
 
 Mediacenter::Mediacenter() {
     isSearching = false;
 }
 
+void Mediacenter::resetMedias() {
+    data.clear();
+
+    std::ofstream streamFile(mediaFile.c_str(), std::ios::trunc);
+
+    if(streamFile.is_open())
+        streamFile << "";
+}
+
+
+void Mediacenter::deleteMediaID() {
+    int idToFind = std::atoi(command.arg.c_str());
+
+    /* deleting the ID from the data vector */
+    auto it = std::remove_if(data.begin(),
+                             data.end(),
+                             [idToFind](Media* obj) { return obj->id == idToFind; });
+
+    data.erase(it);
+
+    // rewriting
+    saveMedias(1);
+
+    delete (*it); // the object was created with "new" 
+}
+
+
 void Mediacenter::showMediaID() {
     int idToFind = std::atoi(command.arg.c_str());
     bool findId = false;
 
-    for(auto it : data) {
-        if( (it->id) == idToFind) {
-            it->print();
-            findId = true;
-        }
-    }
+    auto it = std::find_if(
+                            data.begin(), data.end(), 
+                            [idToFind](Media* obj) { return obj->id == idToFind; }
+                          );
 
-    if(findId == false)
-        std::cout << "ressource non trouvée" << std::endl;
+    if (it != data.end()) 
+        (*it)->print(); 
+    else 
+        std::cout << "ressource non trouvée" << std::endl;      
 }
 
 
@@ -32,7 +56,11 @@ void Mediacenter::searchMedias() {
 
     std::vector<Media*> copy;
 
-    /* filtering data vector with the search results */
+    /* filtering data vector with the search results.
+       the predicat is our function findInfo.
+       the results of the filter operation is inserted in the vector named
+       "copy".
+    */
 
     std::copy_if(searchResults.begin(), searchResults.end(),
                  std::back_inserter(copy), 
@@ -48,7 +76,6 @@ void Mediacenter::printMedias() {
         for(auto it : searchResults)
             it->print();
     }
-
     else 
         for(auto it : data)
             it->print();
@@ -60,13 +87,21 @@ void Mediacenter::loadMedias() {
     std::string buffer = "";
     std::ifstream streamFile(fileName.c_str());
 
+    mediaFile = fileName; // for the record
+
     if(streamFile.is_open()) {
         while(getline(streamFile, buffer)) {
 
             if(buffer.find(".book") != std::string::npos) { // is there ".book" in buffer ?
                 Book *newBook = new Book;
                 newBook->loadMedia(fileName, buffer);
-                data.push_back(newBook);
+                data.push_back(newBook); // new media from a file, added to our media vector
+            }
+
+            else if(buffer.find(".cd") != std::string::npos) { // is there ".cd" in buffer ?
+                CD *newCD = new CD;
+                newCD->loadMedia(fileName, buffer);
+                data.push_back(newCD); // new media from a file, added to our media vector
             }
             /* … */
         }
@@ -78,11 +113,11 @@ void Mediacenter::loadMedias() {
 }
 
 
-void Mediacenter::saveMedias() {
-    std::string fileName = command.arg + ".media";
+void Mediacenter::saveMedias(int FLAG) {
+    std::string fileName = (FLAG == 0) ? command.arg + ".media" : mediaFile;
 
     for(auto it : data)
-        it->saveMedia(fileName);
+        it->saveMedia(fileName, FLAG);
 
     data.clear();
 }
@@ -95,11 +130,15 @@ void Mediacenter::readFileType() {
             Book* newbook = new Book;
             newbook->createMedia();
 
-            data.push_back(newbook);
+            data.push_back(newbook); // new media added to our media vector
         }
 
-        else if(command.arg.compare("cd"));
-            /* … */
+        else if(command.arg.compare("cd") == 0) {
+            CD* newCD = new CD;
+            newCD->createMedia();
+
+            data.push_back(newCD);
+        }
 
         else if(command.arg.compare("vhs"));
             /* … */
@@ -120,11 +159,11 @@ void Mediacenter::readCommand(std::string input) {
             readFileType();
 
 
-        else if(command.commandName.compare("load") == 0)
+        else if(command.commandName.compare("load") == 0) 
             loadMedias();
 
         else if(command.commandName.compare("save") == 0)
-            saveMedias();
+            saveMedias(0);
 
 
         else if(command.commandName.compare("search") == 0) {
@@ -146,11 +185,11 @@ void Mediacenter::readCommand(std::string input) {
         }
 
         else if(command.commandName.compare("delete") == 0) {
-
+            deleteMediaID();
         }
 
         else if(command.commandName.compare("reset") == 0) {
-
+            resetMedias();
         }
 
         else if (command.commandName.compare("bye") == 0) {
