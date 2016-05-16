@@ -6,8 +6,10 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 
-void get_input(std::string& input);
 std::vector<std::string> split(const std::string& str, char delim);
+int compareStrLow(std::string, std::string);
+void get_input(std::string& input);
 
 #endif  //TOOLS_H

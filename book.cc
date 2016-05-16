@@ -12,16 +12,16 @@ bool Book::findInfo(std::string str) {
     /* compare str to object attributes, searching for
        what the user asks 
     */
-
     bool var = false;
     auto strc = str.c_str();
 
-    var = title.find(strc) != std::string::npos;
-    var = var || author.find(strc) != std::string::npos;
-    var = var || recap.find(strc) != std::string::npos;
-    var = var || edition.find(strc) != std::string::npos;
+    var =           compareStrLow(title, str);
+    var = var ||    compareStrLow(author, str);
+    var = var ||    compareStrLow(recap, str);
+    var = var ||    compareStrLow(edition, str);
 
     var = var || year == std::atoi(strc) || nbPages == std::atoi(strc);
+
     return var;
 }
 
@@ -59,29 +59,30 @@ void Book::print() const {
     if(title.find(".book") != std::string::npos)
         titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
 
-    std::cout << "titre : " << titleSimple  << std::endl;
-    std::cout << "auteur : " << author      << std::endl;
-    std::cout << "petit résumé : " << recap << std::endl;
-    std::cout << "édition : " << edition    << std::endl;
-    std::cout << "année : " << year         << std::endl;
-    std::cout << "pages : " << nbPages      << std::endl ;
-    std::cout << "ID :" << id               << std::endl << std::endl;
+    std::cout << "titre : "         << titleSimple  << std::endl;
+    std::cout << "auteur : "        << author       << std::endl;
+    std::cout << "petit résumé : "  << recap        << std::endl;
+    std::cout << "édition : "       << edition      << std::endl;
+    std::cout << "année : "         << year         << std::endl;
+    std::cout << "pages : "         << nbPages      << std::endl ;
+    std::cout << "ID :"             << id           << std::endl << std::endl;
 }
 
 
 void Book::loadMedia(std::string const fileName, std::string readFromFile) {
     /* splits a string read from the database and fills 
-       the object fields */
+       the object fields 
+    */
 
     std::vector<std::string> splitted = split(readFromFile, '|');
 
-    title = splitted[0];
-    author = splitted[1];
-    recap = splitted[2];
+    title   = splitted[0];
+    author  = splitted[1];
+    recap   = splitted[2];
     edition = splitted[3];
-    year = std::atoi(splitted[4].c_str());
-    nbPages = std::atoi(splitted[5].c_str());
-    id = std::atoi(splitted[6].c_str());
+    year    = std::stoi( splitted[4] );
+    nbPages = std::stoi( splitted[5] );
+    id      = std::stoi( splitted[6] );
 
 }
 
@@ -107,7 +108,7 @@ void Book::saveMedia(std::string const fileName, int FLAG) const {
                    << nbPages  << '|'
                    << id       << std::endl;
 
-        std::cout << "media book\" " << title <<  "\" " 
+        std::cout << "media book \"" << title <<  "\" " 
                   << "saved into : " 
                   << fileName         << std::endl;
     }
@@ -117,5 +118,8 @@ void Book::saveMedia(std::string const fileName, int FLAG) const {
                   << std::endl;
 
 }
+
+
+
 
 

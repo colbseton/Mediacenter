@@ -28,6 +28,8 @@ class Media {
         virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
         virtual void saveMedia(std::string const fileName, int FLAG) const {};
 
+    protected:
+        friend class Mediacenter;
         int id;
 };
 
@@ -47,12 +49,12 @@ class Mediacenter {
         void resetMedias();
 
         std::vector<Media*> data;
-        Command command;
 
+    private:
         bool isSearching;
         std::vector<Media*> searchResults;
-
         std::string mediaFile;
+        Command command;
 };
 
 

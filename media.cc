@@ -3,6 +3,7 @@
 
 #include "book.h" // <string.h>
 #include "cd.h"
+#include "vhs.h"
 
 Mediacenter::Mediacenter() {
     isSearching = false;
@@ -103,6 +104,12 @@ void Mediacenter::loadMedias() {
                 newCD->loadMedia(fileName, buffer);
                 data.push_back(newCD); // new media from a file, added to our media vector
             }
+
+            else if(buffer.find(".vhs") != std::string::npos) { // is there ".vhs" in buffer ?
+                VHS *newVHS = new VHS;
+                newVHS->loadMedia(fileName, buffer);
+                data.push_back(newVHS); // new media from a file, added to our media vector
+            }
             /* … */
         }
         std::cout << "medias loaded from file : " << fileName << std::endl;
@@ -140,7 +147,12 @@ void Mediacenter::readFileType() {
             data.push_back(newCD);
         }
 
-        else if(command.arg.compare("vhs"));
+        else if(command.arg.compare("vhs") == 0) {
+            VHS *newVHS = new VHS;
+            newVHS->createMedia();
+            
+            data.push_back(newVHS);
+        }
             /* … */
     }
 }
