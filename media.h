@@ -25,8 +25,8 @@ class Media {
         virtual bool findInfo(std::string) { };
         virtual void print() const { };
         virtual void createMedia() { };
-        virtual void loadMedia(std::string const fileName, std::string readFromFile) {};
-        virtual void saveMedia(std::string const fileName, int FLAG) const {};
+        virtual void loadMedia(std::string const& fileName, std::string readFromFile) {};
+        virtual void saveMedia(std::string const& fileName, int FLAG) const {};
 
     protected:
         friend class Mediacenter;
@@ -47,14 +47,22 @@ class Mediacenter {
         void showMediaID();
         void deleteMediaID();
         void resetMedias();
+        void logToRoot(void);
+
+        std::string getPasswd(void) { // accessor
+            return password;
+        }
 
         std::vector<Media*> data;
+        enum user userType;
 
     private:
         bool isSearching;
         std::vector<Media*> searchResults;
         std::string mediaFile;
         Command command;
+        const std::string password = "labuche";
+
 };
 
 

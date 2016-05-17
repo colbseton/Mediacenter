@@ -7,6 +7,7 @@
 
 Mediacenter::Mediacenter() {
     isSearching = false;
+    userType = USER;
 }
 
 void Mediacenter::resetMedias() {
@@ -16,6 +17,8 @@ void Mediacenter::resetMedias() {
 
     if(streamFile.is_open())
         streamFile << "";
+
+
 }
 
 
@@ -40,9 +43,9 @@ void Mediacenter::showMediaID() {
     int idToFind = std::atoi(command.arg.c_str());
     bool findId = false;
 
-    auto it = std::find_if(
-                            data.begin(), data.end(), 
-                            [idToFind](Media* obj) { return obj->id == idToFind; }
+    auto it = std::find_if(data.begin(), 
+                           data.end(), 
+                           [idToFind](Media* obj) { return obj->id == idToFind; }
                           );
 
     if (it != data.end()) 
@@ -157,6 +160,27 @@ void Mediacenter::readFileType() {
     }
 }
 
+void Mediacenter::logToRoot(void) {
+    std::string input("");
+
+    std::cout << "password for root : ";
+    get_input(input);
+
+    if( userType == USER) {
+        if( input.compare( getPasswd() ) == 0) {
+            userType = ROOT;
+        }
+
+        else 
+            std::cout << "wrong password, failed to log as root" << std::endl;
+    }
+
+    else 
+        std::cout << "you are already logged as root" << std::endl;
+}   
+    
+
+
 void Mediacenter::readCommand(std::string input) {
     std::vector<std::string> inputSplit = split(input, ' ');
 
@@ -196,12 +220,22 @@ void Mediacenter::readCommand(std::string input) {
             showMediaID();
         }
 
+        else if(command.commandName.compare("sudo") == 0) {
+            logToRoot();
+        }
         else if(command.commandName.compare("delete") == 0) {
-            deleteMediaID();
+            if(userType == ROOT)
+                deleteMediaID();
+
+            else std::cout << "you need to be logged as root" <<  std::endl;
         }
 
         else if(command.commandName.compare("reset") == 0) {
-            resetMedias();
+            if(userType == ROOT)
+                resetMedias();
+
+            else 
+                std::cout << "you need to be logged as root" <<  std::endl;
         }
 
         else if (command.commandName.compare("bye") == 0) {

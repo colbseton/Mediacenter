@@ -36,7 +36,7 @@ void VHS::createMedia(){
     std::cout << "Maison de production : ";
     get_input(label);
 
-    std::cout << "Duree de la video: ";
+    std::cout << "Durée de la video: ";
     std::cin >> length;
 }
 
@@ -58,7 +58,7 @@ void VHS::print() const{
 }
 
 
-void VHS::loadMedia(std::string const fileName, std::string readFromFile){
+void VHS::loadMedia(std::string const& fileName, std::string readFromFile){
     /* splits a string read from the database and fills 
        the object fields 
     */
@@ -74,7 +74,7 @@ void VHS::loadMedia(std::string const fileName, std::string readFromFile){
 }
 
 
-void VHS::saveMedia(std::string const fileName, int FLAG) const {
+void VHS::saveMedia(std::string const& fileName, int& FLAG) const {
     /* writing at the end of file, ios::app specifies 
        to write at the end of file 
        ios::trunc rewrites everything

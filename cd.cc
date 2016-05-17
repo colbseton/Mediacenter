@@ -69,7 +69,7 @@ void CD::print() const {
 }
 
 
-void CD::loadMedia(std::string const fileName, std::string readFromFile) {
+void CD::loadMedia(std::string const& fileName, std::string readFromFile) {
     /* splits a string read from the database and fills 
        the object fields 
     */
@@ -86,7 +86,7 @@ void CD::loadMedia(std::string const fileName, std::string readFromFile) {
 }
 
 
-void CD::saveMedia(std::string const fileName, int FLAG) const {
+void CD::saveMedia(std::string const& fileName, int& FLAG) const {
     /* writing at the end of file, ios::app specifies 
        to write at the end of file 
        ios::trunc rewrites everything

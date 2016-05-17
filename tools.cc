@@ -30,5 +30,5 @@ int compareStrLow(string s1, string s2) {
     transform(s2.begin(), s2.end(), s2.begin(), 
               [](unsigned char c) { return tolower(c); } );
 
-    return ( s1.find(s2.c_str()) != string::npos );
+    return ( s1.find( s2.c_str() ) != string::npos );
 }

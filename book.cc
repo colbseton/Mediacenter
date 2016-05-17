@@ -69,7 +69,7 @@ void Book::print() const {
 }
 
 
-void Book::loadMedia(std::string const fileName, std::string readFromFile) {
+void Book::loadMedia(std::string const& fileName, std::string readFromFile) {
     /* splits a string read from the database and fills 
        the object fields 
     */
@@ -87,7 +87,7 @@ void Book::loadMedia(std::string const fileName, std::string readFromFile) {
 }
 
 
-void Book::saveMedia(std::string const fileName, int FLAG) const {
+void Book::saveMedia(std::string const& fileName, int& FLAG) const {
     /* writing at the end of file, ios::app specifies 
        to write at the end of file 
        ios::trunc rewrites everything
