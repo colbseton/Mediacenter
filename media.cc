@@ -125,6 +125,7 @@ void Mediacenter::loadMedias() {
 
 void Mediacenter::saveMedias(int FLAG) {
     std::string fileName = (FLAG == 0) ? command.arg + ".media" : mediaFile;
+    // ^ is it necessary to add ".media" extension or not ?
 
     for(auto it : data)
         it->saveMedia(fileName, FLAG);

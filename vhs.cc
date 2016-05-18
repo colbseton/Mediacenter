@@ -48,7 +48,8 @@ void VHS::print() const{
 
     // delete the extension ".vhs" in the title
     if(title.find(".vhs") != std::string::npos)
-        titleSimple = titleSimple.replace( title.find(extension.c_str()), extension.length(), "" );
+        titleSimple = titleSimple.replace( title.find( extension.c_str() ), 
+                                           extension.length(), "" );
 
     std::cout << "Titre :"              << titleSimple  << std::endl;
     std::cout << "Auteur :"             << author       << std::endl;

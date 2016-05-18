@@ -57,7 +57,8 @@ void CD::print() const {
 
     // delete the extension ".cd" in the title
     if(title.find(".cd") != std::string::npos)
-        titleSimple = titleSimple.replace( title.find(extension.c_str()), extension.length(), "" );
+        titleSimple = titleSimple.replace( title.find( extension.c_str() ), 
+                                           extension.length(), "" );
 
     std::cout << "artiste :"            << author       << std::endl;
     std::cout << "titre :"              << titleSimple  << std::endl;

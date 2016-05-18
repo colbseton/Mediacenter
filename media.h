@@ -22,11 +22,11 @@ class Command {
 class Media {
     public:
         Media() { };
-        virtual bool findInfo(std::string) { };
-        virtual void print() const { };
-        virtual void createMedia() { };
-        virtual void loadMedia(std::string const& fileName, std::string readFromFile) {};
-        virtual void saveMedia(std::string const& fileName, int FLAG) const {};
+        virtual bool findInfo(std::string) = 0;
+        virtual void print() const = 0;
+        virtual void createMedia() = 0;
+        virtual void loadMedia(std::string const& fileName, std::string readFromFile) = 0;
+        virtual void saveMedia(std::string const& fileName, int& FLAG) const = 0 ;
 
     protected:
         friend class Mediacenter;

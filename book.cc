@@ -57,7 +57,8 @@ void Book::print() const {
 
     // delete the extension ".book" in the title
     if(title.find(".book") != std::string::npos)
-        titleSimple = titleSimple.replace(title.find(extension.c_str()), extension.length(), "");
+        titleSimple = titleSimple.replace( title.find( extension.c_str() ), 
+                                          extension.length(), "" );
 
     std::cout << "titre : "         << titleSimple  << std::endl;
     std::cout << "auteur : "        << author       << std::endl;

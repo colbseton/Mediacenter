@@ -8,6 +8,7 @@ void get_input(string& input) {
     getline(cin, input);
 }
 
+
 vector<string> split(const string& str, char delim) { 
     stringstream str_c(str);
     vector<string> res; 
@@ -18,6 +19,7 @@ vector<string> split(const string& str, char delim) {
     
     return res; 
 }  
+
 
 int compareStrLow(string s1, string s2) {
     /* lowers all the characters and 
