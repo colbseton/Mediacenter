@@ -14,4 +14,13 @@ int compareStrLow(std::string, std::string);
 
 void get_input(std::string& input);
 
+template<typename T>
+void myClearFree(std::vector<T*>& vec) {
+    for(auto it : vec) {
+        delete it;
+    }
+
+    vec.clear();
+}
+
 #endif  //TOOLS_H

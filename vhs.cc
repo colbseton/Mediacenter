@@ -7,6 +7,11 @@ VHS::VHS() {
 
 }
 
+VHS::~VHS() {
+
+}
+
+
 bool VHS::findInfo(std::string str) {
     /* compare str to object attributes, searching for
        what the user asks 

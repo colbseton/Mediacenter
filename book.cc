@@ -7,6 +7,10 @@ Book::Book() {
 
 }
 
+Book::~Book() {
+
+}
+
 
 bool Book::findInfo(std::string str) {
     /* compare str to object attributes, searching for

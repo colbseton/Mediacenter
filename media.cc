@@ -10,15 +10,21 @@ Mediacenter::Mediacenter() {
     userType = USER;
 }
 
+Mediacenter::~Mediacenter() {
+    myClearFree(data);
+}
+
+
 void Mediacenter::resetMedias() {
-    data.clear();
+    myClearFree(data);
+    searchResults.clear();
+
+    isSearching = false;
 
     std::ofstream streamFile(mediaFile.c_str(), std::ios::trunc);
 
     if(streamFile.is_open())
         streamFile << "";
-
-
 }
 
 
@@ -130,7 +136,8 @@ void Mediacenter::saveMedias(int FLAG) {
     for(auto it : data)
         it->saveMedia(fileName, FLAG);
 
-    data.clear();
+    myClearFree(data);
+    searchResults.clear();
 }
 
 

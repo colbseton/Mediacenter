@@ -14,6 +14,8 @@ class VHS: public Media {
 
         virtual bool findInfo(std::string);
 
+        virtual ~VHS();
+
     private:
         std::string title;
         std::string author;

@@ -14,6 +14,8 @@ class Book : public Media {
 
         virtual bool findInfo(std::string);
 
+        virtual ~Book();
+
     private:
         std::string title;
         std::string author;

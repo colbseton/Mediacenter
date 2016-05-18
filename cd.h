@@ -14,6 +14,8 @@ class CD : public Media {
 
         virtual bool findInfo(std::string);
 
+        virtual ~CD();
+
     private:
         int length;
         int nbTrack;

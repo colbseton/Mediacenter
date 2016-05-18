@@ -7,6 +7,10 @@ CD::CD() {
 
 }
 
+CD::~CD() {
+
+}
+
 
 bool CD::findInfo(std::string str) {
     /* compare str to object attributes, searching for

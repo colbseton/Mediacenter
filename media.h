@@ -20,6 +20,7 @@ class Command {
 
 
 class Media {
+    /* Media is an abstract classe */
     public:
         Media() { };
         virtual bool findInfo(std::string) = 0;
@@ -27,6 +28,7 @@ class Media {
         virtual void createMedia() = 0;
         virtual void loadMedia(std::string const& fileName, std::string readFromFile) = 0;
         virtual void saveMedia(std::string const& fileName, int& FLAG) const = 0 ;
+        virtual ~Media() {};
 
     protected:
         friend class Mediacenter;
@@ -48,6 +50,7 @@ class Mediacenter {
         void deleteMediaID();
         void resetMedias();
         void logToRoot(void);
+        ~Mediacenter();
 
         std::string getPasswd(void) { // accessor
             return password;
