@@ -5,8 +5,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include <ctime>
-#include <algorithm>
+#include <algorithm> // std::transform
 
 std::vector<std::string> split(const std::string& str, char delim);
 

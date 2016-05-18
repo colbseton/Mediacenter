@@ -4,6 +4,7 @@
 #include <string>
 #include "media.h"
 
+
 class CD : public Media {
     public:
         CD();

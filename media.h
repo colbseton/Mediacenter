@@ -1,11 +1,14 @@
 #ifndef MEDIA_H
 #define MEDIA_H
 
-#include <algorithm> // copy_if
+#include <algorithm> // std::copy_if, std::remove_if, std::find_if
 #include <vector>
 #include <iostream> 
-#include <cstdlib>
+#include <cstdlib> // std::exit
 #include <fstream>
+
+#include "tools.h"
+
 
 enum user {
     USER, ROOT

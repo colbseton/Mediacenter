@@ -1,7 +1,5 @@
 #include "media.h"
-#include "tools.h"
-
-#include "book.h" // <string.h>
+#include "book.h" 
 #include "cd.h"
 #include "vhs.h"
 
@@ -51,8 +49,7 @@ void Mediacenter::showMediaID() {
 
     auto it = std::find_if(data.begin(), 
                            data.end(), 
-                           [idToFind](Media* obj) { return obj->id == idToFind; }
-                          );
+                           [idToFind](Media* obj) { return obj->id == idToFind; });
 
     if (it != data.end()) 
         (*it)->print(); 
@@ -74,7 +71,7 @@ void Mediacenter::searchMedias() {
 
     std::copy_if(searchResults.begin(), searchResults.end(),
                  std::back_inserter(copy), 
-                 [strToFind](Media* obj){ return (obj->findInfo(strToFind)); } );
+                 [strToFind](Media* obj){ return (obj->findInfo(strToFind)); });
 
     searchResults = copy;
 }

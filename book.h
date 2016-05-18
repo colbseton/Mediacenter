@@ -2,7 +2,8 @@
 #define BOOK_H
 
 #include <string>
-#include "media.h" /* <fstream>, <iostream>, <vector>… */
+#include "media.h"
+
 
 class Book : public Media {
     public:

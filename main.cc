@@ -3,11 +3,8 @@
 #include <vector>
 #include <ctime>
 
-#include "book.h"
-#include "cd.h"
-#include "media.h"
-#include "vhs.h"
 #include "tools.h"
+#include "media.h"
 
 using namespace std;
                          

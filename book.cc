@@ -1,7 +1,8 @@
 #include <iostream>
 
 #include "book.h"
-#include "tools.h" // <ctime>
+#include "tools.h"
+
 
 Book::Book() {
 
