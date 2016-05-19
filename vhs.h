@@ -17,7 +17,7 @@ class VHS: public Media {
 
         virtual ~VHS();
 
-    private:
+    protected:
         std::string title;
         std::string author;
         std::string label;

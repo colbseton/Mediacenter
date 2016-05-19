@@ -46,11 +46,15 @@ void Book::createMedia() {
     std::cout << "Éditon : ";
     get_input(edition);
 
+    std::string buffer("");
     std::cout << "Année de parution : ";
-    std::cin >> year;
+    get_input(buffer);
+    year = std::atoi( buffer.c_str() );
 
     std::cout << "Nombre de pages : ";
-    std::cin >> nbPages;
+    buffer = "";
+    get_input(buffer);
+    nbPages = std::atoi( buffer.c_str() );
 
     id = std::rand();
 }
@@ -79,7 +83,6 @@ void Book::loadMedia(std::string const& fileName, std::string readFromFile) {
     /* splits a string read from the database and fills 
        the object fields 
     */
-
     std::vector<std::string> splitted = split(readFromFile, '|');
 
     title   = splitted[0];

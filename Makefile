@@ -1,6 +1,6 @@
 EXEC=biblio
 
-SRC = main.cc cd.cc book.cc vhs.cc tools.cc media.cc
+SRC = main.cc cd.cc book.cc vhs.cc tools.cc media.cc dvd.cc res.cc
 OBJS= $(SRC:.cc=.o)
 
 CXXFLAGS = -std=c++11

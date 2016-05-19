@@ -1,7 +1,13 @@
 #include "media.h"
+
 #include "book.h" 
+
 #include "cd.h"
+
 #include "vhs.h"
+#include "dvd.h"
+
+#include "res.h"
 
 Mediacenter::Mediacenter() {
     isSearching = false;
@@ -9,12 +15,12 @@ Mediacenter::Mediacenter() {
 }
 
 Mediacenter::~Mediacenter() {
-    myClearFree(data);
+    myClearFree<Media>(data);
 }
 
 
 void Mediacenter::resetMedias() {
-    myClearFree(data);
+    myClearFree<Media>(data);
     searchResults.clear();
 
     isSearching = false;
@@ -105,18 +111,29 @@ void Mediacenter::loadMedias() {
                 data.push_back(newBook); // new media from a file, added to our media vector
             }
 
-            else if(buffer.find(".cd") != std::string::npos) { // is there ".cd" in buffer ?
+            else if(buffer.find(".cd") != std::string::npos) { 
                 CD *newCD = new CD;
                 newCD->loadMedia(fileName, buffer);
-                data.push_back(newCD); // new media from a file, added to our media vector
+                data.push_back(newCD); 
             }
 
-            else if(buffer.find(".vhs") != std::string::npos) { // is there ".vhs" in buffer ?
+            else if(buffer.find(".vhs") != std::string::npos) { 
                 VHS *newVHS = new VHS;
                 newVHS->loadMedia(fileName, buffer);
-                data.push_back(newVHS); // new media from a file, added to our media vector
+                data.push_back(newVHS); 
             }
-            /* … */
+
+            else if(buffer.find(".dvd") != std::string::npos) { 
+                DVD *newDVD = new DVD;
+                newDVD->loadMedia(fileName, buffer);
+                data.push_back(newDVD); 
+            }
+
+            else if(buffer.find(".res") != std::string::npos) { 
+                ResNum *newResNum = new ResNum;
+                newResNum->loadMedia(fileName, buffer);
+                data.push_back(newResNum); 
+            }
         }
         std::cout << "medias loaded from file : " << fileName << std::endl;
     }
@@ -133,7 +150,7 @@ void Mediacenter::saveMedias(int FLAG) {
     for(auto it : data)
         it->saveMedia(fileName, FLAG);
 
-    myClearFree(data);
+    myClearFree<Media>(data);
     searchResults.clear();
 }
 
@@ -160,6 +177,20 @@ void Mediacenter::readFileType() {
             newVHS->createMedia();
             
             data.push_back(newVHS);
+        }
+
+        else if(command.arg.compare("dvd") == 0) {
+            DVD *newDVD = new DVD;
+            newDVD->createMedia();
+            
+            data.push_back(newDVD);
+        }
+
+        else if(command.arg.compare("resnum") == 0) {
+            ResNum *newResNum = new ResNum;
+            newResNum->createMedia();
+            
+            data.push_back(newResNum);
         }
             /* … */
     }

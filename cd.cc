@@ -46,11 +46,16 @@ void CD::createMedia() {
     std::cout << "Genre : ";
     get_input(genre);
 
+
+    std::string buffer("");
     std::cout << "Nombre de piste : ";
-    std::cin >> nbTrack;
+    get_input(buffer);
+    nbTrack = std::atoi( buffer.c_str() );
 
     std::cout << "Duree du cd : ";
-    std::cin >> length;
+    buffer = "";
+    get_input(buffer);
+    length = std::atoi( buffer.c_str() );
 
     id = std::rand();
 }
@@ -65,13 +70,13 @@ void CD::print() const {
         titleSimple = titleSimple.replace( title.find( extension.c_str() ), 
                                            extension.length(), "" );
 
-    std::cout << "artiste :"            << author       << std::endl;
-    std::cout << "titre :"              << titleSimple  << std::endl;
-    std::cout << "genre :"              << genre        << std::endl;
-    std::cout << "durée :"              << length       << std::endl;
-    std::cout << "nombre de piste: "    << nbTrack      << std::endl;
-    std::cout << "maison de disque : "  << label        << std::endl;
-    std::cout << "ID :"                 << id           << std::endl << std::endl;
+    std::cout << "artiste : "            << author       << std::endl;
+    std::cout << "titre : "              << titleSimple  << std::endl;
+    std::cout << "genre : "              << genre        << std::endl;
+    std::cout << "durée : "              << length       << std::endl;
+    std::cout << "nombre de piste: "     << nbTrack      << std::endl;
+    std::cout << "maison de disque : "   << label        << std::endl;
+    std::cout << "ID : "                 << id           << std::endl << std::endl;
 }
 
 
@@ -79,7 +84,6 @@ void CD::loadMedia(std::string const& fileName, std::string readFromFile) {
     /* splits a string read from the database and fills 
        the object fields 
     */
-
     std::vector<std::string> splitted = split(readFromFile, '|');
 
     title   = splitted[0];

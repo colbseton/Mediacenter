@@ -1,19 +1,20 @@
 #include <iostream>
 
+#include "dvd.h"
 #include "vhs.h"
 #include "tools.h"
 
 
-VHS::VHS() {
+DVD::DVD() {
 
 }
 
-VHS::~VHS() {
+DVD::~DVD() {
 
 }
 
 
-bool VHS::findInfo(std::string str) {
+bool DVD::findInfo(std::string str) {
     /* compare str to object attributes, searching for
        what the user asks 
     */
@@ -25,13 +26,14 @@ bool VHS::findInfo(std::string str) {
     var = var ||    compareStrLow(label, str);
 
     var = var || length == std::atoi(strc);
+    var = var || nbChapters == std::atoi(strc);
 
     return var;
 }
 
 
-void VHS::createMedia(){
-     std::cout << "Ajout d'une video VHS ..." << std::endl;
+void DVD::createMedia(){
+     std::cout << "Ajout d'un DVD ..." << std::endl;
 
     std::cout << "Nom du titre : ";
     get_input(title);
@@ -42,48 +44,55 @@ void VHS::createMedia(){
     std::cout << "Maison de production : ";
     get_input(label);
 
-    std::cout << "Durée de la video: ";
+    std::cout << "Durée du DVD: ";
     std::string buffer("");
     get_input(buffer);
     length = std::atoi( buffer.c_str() );
+
+    std::cout << "Nombre de chapitres : ";
+    buffer = "";
+    get_input(buffer);
+    nbChapters = std::atoi( buffer.c_str() );
 }
 
 
 
-void VHS::print() const{
-    std::string extension = ".vhs";
+void DVD::print() const{
+    std::string extension = ".dvd";
     std::string titleSimple = title;
 
-    // delete the extension ".vhs" in the title
-    if(title.find(".vhs") != std::string::npos)
+    // delete the extension ".DVD" in the title
+    if(title.find(".dvd") != std::string::npos)
         titleSimple = titleSimple.replace( title.find( extension.c_str() ), 
                                            extension.length(), "" );
 
     std::cout << "titre : "                  << titleSimple  << std::endl;
     std::cout << "auteur : "                 << author       << std::endl;
     std::cout << "durée : "                  << length       << std::endl;
+    std::cout << "nombre de chapitres : "    << nbChapters   << std::endl;
     std::cout << "maison de production : "   << label        << std::endl;
-    std::cout << "ID :"                      << id           << std::endl << std::endl;
+    std::cout << "ID : "                     << id           << std::endl << std::endl;
 
 }
 
 
-void VHS::loadMedia(std::string const& fileName, std::string readFromFile){
+void DVD::loadMedia(std::string const& fileName, std::string readFromFile){
     /* splits a string read from the database and fills 
        the object fields 
     */
     std::vector<std::string> splitted = split(readFromFile, '|');
 
-    title   = splitted[0];
-    author  = splitted[1];
-    length  = std::stoi( splitted[2] );
-    label   = splitted[3];
-    id      = std::stoi( splitted[4] );
+    title      = splitted[0];
+    author     = splitted[1];
+    length     = std::stoi( splitted[2] );
+    label      = splitted[3];
+    nbChapters = std::stoi( splitted[4] );
+    id         = std::stoi( splitted[5] );
 
 }
 
 
-void VHS::saveMedia(std::string const& fileName, int& FLAG) const {
+void DVD::saveMedia(std::string const& fileName, int& FLAG) const {
     /* writing at the end of file, 
        ios::app specifies 
        to write at the end of file 
@@ -93,17 +102,18 @@ void VHS::saveMedia(std::string const& fileName, int& FLAG) const {
     std::ofstream streamFile(fileName.c_str(), (FLAG == 0) ? std::ios::app : std::ios::trunc);
 
     if(streamFile.is_open()) {
-        if(title.find(".vhs") != std::string::npos)
+        if(title.find(".dvd") != std::string::npos)
             streamFile << title << '|';
 
-        else streamFile << title << ".vhs" << '|';
+        else streamFile << title << ".dvd" << '|';
 
-        streamFile << author  << '|'
-                   << length  << '|'
-                   << label   << '|'
-                   << id      << std::endl;
+        streamFile << author     << '|'
+                   << length     << '|'
+                   << label      << '|'
+                   << nbChapters << '|'
+                   << id         << std::endl;
 
-        std::cout << "media vhs \"" << title <<  "\" " 
+        std::cout << "media dvd \"" << title <<  "\" " 
                   << "saved into : " 
                   << fileName         << std::endl;
     }
