@@ -10,8 +10,8 @@
 #include "res.h"
 
 Mediacenter::Mediacenter() {
-    isSearching = false;
-    userType = USER;
+    isSearching = false; // no searching 
+    userType = USER; // no admin
 }
 
 Mediacenter::~Mediacenter() {
@@ -25,6 +25,7 @@ void Mediacenter::resetMedias() {
 
     isSearching = false;
 
+    // ios::trunc rewrites everything
     std::ofstream streamFile(mediaFile.c_str(), std::ios::trunc);
 
     if(streamFile.is_open())
@@ -33,19 +34,18 @@ void Mediacenter::resetMedias() {
 
 
 void Mediacenter::deleteMediaID() {
-    int idToFind = std::atoi(command.arg.c_str());
+    int idToFind = std::atoi( command.arg.c_str() );
 
     /* deleting the ID from the data vector */
     auto it = std::remove_if(data.begin(),
                              data.end(),
-                             [idToFind](Media* obj) { return obj->id == idToFind; });
-
-    data.erase(it);
-
-    // rewriting
-    saveMedias(1);
+                             [idToFind]( Media* obj ) { return obj->id == idToFind; });
 
     delete (*it); // the object was created with "new" 
+    data.erase(it);
+
+    // rewriting (FLAG = 1)
+    saveMedias(1);
 }
 
 
@@ -55,9 +55,9 @@ void Mediacenter::showMediaID() {
 
     auto it = std::find_if(data.begin(), 
                            data.end(), 
-                           [idToFind](Media* obj) { return obj->id == idToFind; });
+                           [idToFind]( Media* obj ) { return obj->id == idToFind; });
 
-    if (it != data.end()) 
+    if (it != data.end()) // if found
         (*it)->print(); 
     else 
         std::cout << "ressource non trouvée" << std::endl;      
@@ -76,8 +76,8 @@ void Mediacenter::searchMedias() {
     */
 
     std::copy_if(searchResults.begin(), searchResults.end(),
-                 std::back_inserter(copy), 
-                 [strToFind](Media* obj){ return (obj->findInfo(strToFind)); });
+                 std::back_inserter( copy ), 
+                 [strToFind]( Media* obj ){ return (obj->findInfo(strToFind)); });
 
     searchResults = copy;
 }
@@ -145,12 +145,15 @@ void Mediacenter::loadMedias() {
 
 void Mediacenter::saveMedias(int FLAG) {
     std::string fileName = (FLAG == 0) ? command.arg + ".media" : mediaFile;
-    // ^ is it necessary to add ".media" extension or not ?
+    /* ^ is it necessary to add ".media" extension or not ?
+       if FLAG == 1, it is a rewriting and mediaFile has already got its extension
+       because it has been loaded (cf Mediacenter::loadMedias() )
+    */
 
     for(auto it : data)
         it->saveMedia(fileName, FLAG);
 
-    myClearFree<Media>(data);
+    myClearFree<Media>(data); // clear the memory
     searchResults.clear();
 }
 
@@ -158,7 +161,7 @@ void Mediacenter::saveMedias(int FLAG) {
 void Mediacenter::readFileType() {
     if(command.commandName.compare("add") == 0) {
 
-        if(command.arg.compare("book") == 0) {
+        if(command.arg.compare("book") == 0) { // is it a book ?
             Book* newbook = new Book;
             newbook->createMedia();
 

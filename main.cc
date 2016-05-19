@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 
     /* interactive session */
     while(1) {
+        cout << "mediacenter $: ";
         get_input(input);
         mediacenter.readCommand(input);
         input = "";

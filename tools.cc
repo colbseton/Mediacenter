@@ -4,7 +4,6 @@
 using namespace std;
 
 void get_input(string& input) {
-    cout << "> ";
     getline(cin, input);
 }
 

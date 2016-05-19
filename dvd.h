@@ -4,7 +4,6 @@
 #include <string>
 
 #include "vhs.h"
-#include "media.h"
 
 
 class DVD : public VHS {
